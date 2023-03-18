@@ -8,14 +8,18 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
-@Builder
 @Entity
+@Getter
+@Setter
 public class Income {
 
   @Id
+  @GeneratedValue
   private UUID id;
 
   private String description;
@@ -27,7 +31,5 @@ public class Income {
 
   @UpdateTimestamp
   private LocalDateTime updatedAt;
-
-  private LocalDateTime deletedAt;
 
 }

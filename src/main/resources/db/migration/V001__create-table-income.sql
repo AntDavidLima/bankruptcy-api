@@ -7,6 +7,5 @@ CREATE TABLE
     value decimal(8, 2) NOT NULL,
     created_at timestamp NOT NULL,
     updated_at timestamp,
-    deleted_at timestamp,
     PRIMARY KEY (id)
   );
