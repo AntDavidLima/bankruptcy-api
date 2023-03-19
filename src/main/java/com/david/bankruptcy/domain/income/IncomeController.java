@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.david.bankruptcy.utils.NullAwareBeanUtilsBean;
+import com.david.bankruptcy.util.NullAwareBeanUtilsBean;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -40,12 +41,12 @@ public class IncomeController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public Income create(@RequestBody Income body) {
+  public Income create(@Valid @RequestBody Income body) {
     return incomeRepository.save(body);
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Income> update(@RequestBody Income body, @PathVariable UUID id) {
+  public ResponseEntity<Income> update(@Valid @RequestBody Income body, @PathVariable UUID id) {
     return incomeRepository.findById(id)
         .map(income -> {
           try {

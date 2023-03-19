@@ -1,4 +1,4 @@
-package com.david.bankruptcy.utils;
+package com.david.bankruptcy.util;
 
 import java.lang.reflect.Field;
 
