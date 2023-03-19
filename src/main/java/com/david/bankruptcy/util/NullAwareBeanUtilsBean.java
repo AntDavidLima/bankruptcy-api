@@ -4,12 +4,16 @@ import java.lang.reflect.Field;
 
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.PropertyAccessorFactory;
+import org.springframework.stereotype.Service;
 
-public class NullAwareBeanUtilsBean {
+import com.david.bankruptcy.exception.NullObjectCopyException;
 
-  public static void copyProperties(Object source, Object target) throws Exception {
-    if (source == null || target == null || source.getClass() != target.getClass()) {
-      throw new Exception("Error copying properties");
+@Service
+public class NullAwareBeanUtilsBean<T> {
+
+  public void copyProperties(T source, T target) {
+    if (source == null || target == null) {
+      throw new NullObjectCopyException("Can not copy properties from/to null objects");
     }
 
     final BeanWrapper wrapedSource = PropertyAccessorFactory.forBeanPropertyAccess(source);

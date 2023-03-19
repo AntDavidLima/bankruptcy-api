@@ -5,16 +5,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
-public class ExceptionHandler extends ResponseEntityExceptionHandler {
+public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler {
 
   @Override
   protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
@@ -39,6 +41,19 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
 
     return handleExceptionInternal(ex, body, headers, status, request);
 
+  }
+
+  @ExceptionHandler(NullObjectCopyException.class)
+  public ResponseEntity<Object> handleNullObjectCopyException(NullObjectCopyException exception, WebRequest request) {
+    HttpStatusCode status = HttpStatus.INTERNAL_SERVER_ERROR;
+
+    ExceptionBody body = ExceptionBody.builder()
+        .status(status.value())
+        .timestamp(LocalDateTime.now())
+        .message(exception.getMessage())
+        .build();
+
+    return handleExceptionInternal(exception, body, new HttpHeaders(), status, request);
   }
 
 }

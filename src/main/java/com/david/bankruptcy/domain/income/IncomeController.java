@@ -27,6 +27,8 @@ public class IncomeController {
 
   private IncomeRepository incomeRepository;
 
+  private NullAwareBeanUtilsBean<Income> beanUtilsBean;
+
   @GetMapping
   public List<Income> index() {
     return incomeRepository.findAll();
@@ -49,11 +51,8 @@ public class IncomeController {
   public ResponseEntity<Income> update(@Valid @RequestBody Income body, @PathVariable UUID id) {
     return incomeRepository.findById(id)
         .map(income -> {
-          try {
-            NullAwareBeanUtilsBean.copyProperties(body, income);
-          } catch (Exception e) {
-            // TODO: handle exception
-          }
+
+          beanUtilsBean.copyProperties(body, income);
 
           Income updatedIncome = incomeRepository.save(income);
 
