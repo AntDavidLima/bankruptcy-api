@@ -4,11 +4,11 @@ import java.lang.reflect.Field;
 
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.PropertyAccessorFactory;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.david.bankruptcy.exception.NullObjectCopyException;
 
-@Service
+@Component
 public class NullAwareBeanUtilsBean<T> {
 
   public void copyProperties(T source, T target) {
